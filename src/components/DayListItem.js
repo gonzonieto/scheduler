@@ -19,7 +19,7 @@ function DayListItem(props){
   };
 
   return(
-    <li className={dayListItemClasses} onClick={() => setDay(name)}>
+    <li className={dayListItemClasses} onClick={setDay}>
       <h2>{name}</h2>
       <h3>{formatSpots(spots)}</h3>
     </li>

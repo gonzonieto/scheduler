@@ -4,15 +4,14 @@ import InterviewerListItem from "components/InterviewerListItem";
 import "components/InterviewerList.scss"
 
 function InterviewerList(props){
-  const { interviewers, setInterviewer, interviewer} = props;
 
-  const interviewerList = interviewers.map((item) => (
+  const interviewerList = props.interviewers.map((interviewer) => (
     <InterviewerListItem
-      key={item.id}
-      name={item.name}
-      avatar={item.avatar}
-      selected={item.id === interviewer}
-      setInterviewer={() => setInterviewer(item.id)}
+      key={interviewer.id}
+      name={interviewer.name}
+      avatar={interviewer.avatar}
+      selected={interviewer.id === props.interviewer}
+      setInterviewer={() => props.setInterviewer(interviewer.id)}
     />
   ));
 

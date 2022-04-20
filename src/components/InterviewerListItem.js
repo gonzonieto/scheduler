@@ -4,20 +4,20 @@ import classNames from "classnames";
 import "components/InterviewerListItem.scss";
 
 function InterviewerListItem(props){
-  // id:integer, name:string, avatar:url
-  const { id, name, avatar, selected, setInterviewer} = props;
+  const { name, avatar, selected, setInterviewer } = props;
 
-  const interviewerListItemClasses = classNames({"interviewers__item--selected": selected});
+  const interviewerListItemClasses = classNames(
+    {"interviewers__item--selected": selected}
+  );
 
   return(
-    <li className={interviewerListItemClasses} onClick={() => setInterviewer(id)}>
+    <li className={interviewerListItemClasses} onClick={setInterviewer}>
       <img
-        key={id}
         className="interviewers__item-image"
         src={avatar}
         alt={name}
       />
-      {selected && name}
+      {(selected && name)}
     </li>
   );
 };

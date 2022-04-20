@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Button from "./Button";
 import { action } from "@storybook/addon-actions";
 
-import "components/Application.scss";
+import Button from "components/Button";
+import DayList from "components/DayList";
 
-import DayList from "./DayList";
+import "components/Application.scss";
 
 export default function Application(props) {
 

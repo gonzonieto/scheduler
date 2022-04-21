@@ -5,15 +5,11 @@ import Show from "components/Appointment/Show";
 import "components/Appointment/styles.scss";
 
 export default function Appointment({ time, interview }){
-  // const formatAppointmentString = (time) => {
-  //   return time ? `Appointment at ${time}` : "No Appointments";
-  // };
-
   return(
     <article className="appointment">
       <Header time={time}>
       </Header>
-      {interview ? <Show /> : <Empty />}
+      {interview ? <Show student={interview.student} interviewer={interview.interviewer} /> : <Empty />}
     </article>
   );
 };

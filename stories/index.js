@@ -32,7 +32,9 @@ storiesOf("Button", module)
   .add("Confirm", () => <Button confirm>Confirm</Button>)
   .add("Danger", () => <Button danger>Cancel</Button>)
   .add("Clickable", () => (
-    <Button onClick={action("button-clicked")}>Clickable</Button>
+    <Button onClick={action("button-clicked")}>
+      Clickable
+    </Button>
   ))
   .add("Disabled", () => (
     <Button disabled onClick={action("button-clicked")}>
@@ -47,11 +49,31 @@ storiesOf("DayListItem", module)
       { name: "light", value: "#fefefe", default: true }
     ]
   })
-  .add("Unselected", () => <DayListItem name="Monday" spots={5} />)
-  .add("Selected", () => <DayListItem name="Monday" spots={5} selected />)
-  .add("Full", () => <DayListItem name="Monday" spots={0} />)
+  .add("Unselected", () => (
+    <DayListItem
+      name="Monday"
+      spots={5}
+    />
+  ))
+  .add("Selected", () => (
+    <DayListItem
+      name="Monday"
+      spots={5}
+      selected
+    />
+  ))
+  .add("Full", () => (
+    <DayListItem
+      name="Monday"
+      spots={0}
+    />
+  ))
   .add("Clickable", () => (
-    <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} />
+    <DayListItem
+      name="Tuesday"
+      setDay={action("setDay")}
+      spots={5}
+    />
   ));
 
 const days = [
@@ -77,13 +99,25 @@ storiesOf("DayList", module)
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
   })
   .add("Monday", () => (
-    <DayList days={days} value={"Monday"} onChange={action("setDay")} />
+    <DayList
+      days={days}
+      value={"Monday"}
+      onChange={action("setDay")}
+    />
   ))
   .add("Tuesday", () => (
-    <DayList days={days} value={"Tuesday"} onChange={action("setDay")} />
+    <DayList
+      days={days}
+      value={"Tuesday"}
+      onChange={action("setDay")}
+    />
   ))
   .add("Wednesday", () => (
-    <DayList days={days} value={"Wednesday"} onChange={action("setDay")} />
+    <DayList
+      days={days}
+      value={"Wednesday"}
+      onChange={action("setDay")}
+    />
   ));
 
 const interviewer = {
@@ -156,16 +190,58 @@ storiesOf("Appointment", module)
       { name: "dark", value: "#222f3e" }
     ]
   })
-  .add("Appointment", () => <Appointment />)
-  .add("Appointment with Time", () => <Appointment time="12pm" />)
-  .add("Header", () => <Header time="12pm" />)
-  .add("Empty", () => <Empty onAdd={action("onAdd")} />)
-  .add("Show", () => <Show student="Lydia Miller-Jones" interviewer={interviewer} onEdit={action("onEdit")} onDelete={action("onDelete")} />)
-  .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={action("onConfirm")} onCancel={action("onCancel")} />)
-  .add("Status", () => <Status message="Deleting" />)
-  .add("Error", () => <Error message="Could not delete appointment." onClose={action("onClose")} />)
-  .add("Create Form", () => <Form interviewers={interviewers} onSave={action("onSave")} onCancel={action("onCancel")} />)
-  .add("Edit Form", () => <Form student="Gonzo Nieto" interviewer={3} interviewers={interviewers} onSave={action("onSave")} onCancel={action("onCancel")} />)
+  .add("Appointment", () => (
+    <Appointment />
+  ))
+  .add("Appointment with Time", () => (
+    <Appointment time="12pm" />
+  ))
+  .add("Header", () => (
+    <Header time="12pm" />
+  ))
+  .add("Empty", () => (
+    <Empty onAdd={action("onAdd")} />
+  ))
+  .add("Show", () => (
+    <Show
+      student="Lydia Miller-Jones"
+      interviewer={interviewer}
+      onEdit={action("onEdit")}
+      onDelete={action("onDelete")}
+    />
+  ))
+  .add("Confirm", () => (
+    <Confirm
+      message="Delete the appointment?"
+      onConfirm={action("onConfirm")}
+      onCancel={action("onCancel")}
+    />
+  ))
+  .add("Status", () => (
+    <Status message="Deleting" />
+  ))
+  .add("Error", () => (
+    <Error
+      message="Could not delete appointment."
+      onClose={action("onClose")}
+    />
+  ))
+  .add("Create Form", () => (
+    <Form
+      interviewers={interviewers}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />
+  ))
+  .add("Edit Form", () => (
+    <Form
+      student="Gonzo Nieto"
+      interviewer={3}
+      interviewers={interviewers}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />
+  ))
   .add("Appointment Empty", () => (
     <Fragment>
       <Appointment id={1} time="4pm" />

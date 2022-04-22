@@ -17,7 +17,7 @@ export default function Application(props) {
     interviewers: {},
   });
 
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const appointments = getAppointmentsForDay(state, state.day);
 
   const setDay = (day) => setState(prev => ({ ...prev, day }));
 
@@ -38,8 +38,8 @@ export default function Application(props) {
     .catch((error) => console.log('LOGGING "error":', error));
   }, []);
 
-  const appointmentList =
-    dailyAppointments
+  const schedule =
+    appointments
       .map((appointment) => (
         <Appointment
           key={appointment.id}
@@ -71,7 +71,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         <Button confirm onClick={() => console.log('Button clicked!')}>Bouton</Button>
-        {appointmentList}
+        {schedule}
         <Appointment key="last" time="5pm" />
       </section>
     </main>

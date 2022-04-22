@@ -3,8 +3,11 @@ export function getAppointmentsForDay(state, day) {
 
   if (!state.days || !selectedDay) return [];
   
+  // from the array of appointments for the selected day, 
   return selectedDay.appointments.map(
-    appointmentID => state.appointments.find(appointment => appointment.id === appointmentID)
+    appointmentID => state.appointments.find(
+      appointment => appointment.id === appointmentID
+    )
   )
 };
 

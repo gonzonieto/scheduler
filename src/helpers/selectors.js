@@ -3,7 +3,7 @@ export function getAppointmentsForDay(state, day) {
 
   if (!state.days || !selectedDay) return [];
 
-  // from the array of appointments for the selected day, 
+  // map the array of appointment IDs into an array of appointment objects
   return selectedDay.appointments.map(
     appointmentID => Object.values(state.appointments).find(
       appointment => appointment.id === appointmentID
@@ -12,7 +12,9 @@ export function getAppointmentsForDay(state, day) {
 };
 
 export function getInterview(state, interview) {
+  // if there is no interview in this timeslot, return null 
   if (!interview) return null;
+
   // interview is an Object with student:String, interviewer:integer
   // this function returns an Object with student:String, interviewer:Object
   

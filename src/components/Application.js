@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { action } from "@storybook/addon-actions";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import Button from "components/Button";
 import DayList from "components/DayList";
@@ -48,20 +48,28 @@ const appointments = {
 
 export default function Application(props) {
 
+  const [days, setDays] = useState([]);
   const [day, setDay] = useState("Monday");
 
-  const days = [
-    {id: 1, name: "Monday", spots: 2,},
-    {id: 2, name: "Tuesday", spots: 5,},
-    {id: 3, name: "Wednesday", spots: 0,}
-  ];
+  useEffect(() => {
+    axios.get('http://localhost:8001/api/days')
+      .then((response) => {
+        console.log('LOGGING "response.data":', response.data);
+        setDays(response.data);
+      })
+      .catch((error) => {
+        console.log('LOGGING "error":', error);
+      });
+  }, []);
 
-  const appointmentList = Object.values(appointments).map(appointment => (
-    <Appointment
-      key={appointment.id}
-      {...appointment}
-    />
-  )); 
+  const appointmentList =
+    Object.values(appointments)
+      .map((appointment) => (
+        <Appointment
+          key={appointment.id}
+          {...appointment}
+        />
+      )); 
 
   return (
     <main className="layout">
@@ -86,7 +94,7 @@ export default function Application(props) {
       />
       </section>
       <section className="schedule">
-        {/* <Button confirm danger disabled onClick={action("button-clicked")}>Bouton</Button> */}
+        <Button confirm onClick={() => console.log('Button clicked!')}>Bouton</Button>
         {appointmentList}
         <Appointment key="last" time="5pm" />
       </section>

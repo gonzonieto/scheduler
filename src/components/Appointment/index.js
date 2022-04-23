@@ -6,7 +6,7 @@ import Form from "components/Appointment/Form";
 import useVisualMode from "hooks/useVisualMode";
 import "components/Appointment/styles.scss";
 
-export default function Appointment({ time, interview }){
+export default function Appointment({ time, interview, interviewers }){
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -30,7 +30,7 @@ export default function Appointment({ time, interview }){
       )}
       {mode === CREATE && (
         <Form
-          interviewers={[]}
+          interviewers={interviewers}
           onSave={() => console.log("Clicked onSave")}
           onCancel={() => back()}
         />

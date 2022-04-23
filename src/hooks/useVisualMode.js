@@ -6,8 +6,11 @@ export default function useVisualMode(initial) {
   // history is a stack
   const [history, setHistory] = useState([initial]);
 
-  const transition = (newMode) => {
+  const transition = (newMode, replace = false) => {
     const newHistory = [...history];
+
+    replace && newHistory.pop();
+
     newHistory.push(newMode);
     
     setMode(newMode);

@@ -37,28 +37,23 @@ export default function Application() {
       .catch((error) => console.log('LOGGING "error":', error));
   }, []);
 
-  console.log('STATE: ', state);
-  // const bookInterview = (id, interview) => {
-  //   const currentAppointment = state.appointments.find(
-  //     (appointment) => appointment.id === id
-  //   );
+  const bookInterview = (id, interview) => {
+    const currentAppointment = state.appointments[id];
 
-  //   console.log(`ID ${id}, INTERVIEW:`, interview);
-  //   console.log('');
-  //   console.log('currentAppointment:', currentAppointment);
+    const newAppointment = {
+      ...currentAppointment,
+      interview: { ...interview },
+    };
+    console.log('LOGGING "newAppointment":', newAppointment);
 
-  //   const newAppointment = {
-  //     ...currentAppointment,
-  //     interview: { ...interview },
-  //   };
+    console.log('appointments BEFORE: ', state.appointments);
 
-  //   const appointments = {
-  //     ...state.appointments,
-  //     [id - 1]: newAppointment,
-  //   };
-
-  //   console.log('"new appointments object', appointments);
-  // };
+    const appointments = {
+      ...state.appointments,
+      [id]: newAppointment,
+    };
+    console.log('appointments AFTER: ', appointments);
+  };
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
@@ -74,7 +69,7 @@ export default function Application() {
         interviewers={interviewers}
         {...appointment}
         interview={interview}
-        // bookInterview={bookInterview}
+        bookInterview={bookInterview}
       />
     );
   });

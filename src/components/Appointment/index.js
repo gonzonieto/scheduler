@@ -22,7 +22,12 @@ export default function Appointment({
       student: name,
       interviewer,
     };
-    bookInterview(id, interview);
+    console.log('Calling bookInterview() ...');
+    bookInterview(id, interview)
+      .then(() => {
+        transition(SHOW);
+      })
+      .catch((reject) => console.log('REJECT: ', reject));
   };
 
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);

@@ -38,7 +38,8 @@ export default function Application() {
   }, []);
 
   const bookInterview = (id, interview) => {
-    console.log('LOGGING "state":', state);
+    // This function creates new appointment object with the details of the interview that was booked, makes an axios PUT request to update the appointment in the database, updates state, and returns a Promise for the axios PUT request so the Appointment component that called this function can transition view modes once the database has been updated.
+
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
@@ -49,10 +50,14 @@ export default function Application() {
       [id]: appointment,
     };
 
-    setState({
-      ...state,
-      appointments,
-    });
+    return axios
+      .put(`http://localhost:8001/api/appointments/${id}`, appointment)
+      .then(() => {
+        setState({ ...state, appointments });
+      })
+      .catch((error) => {
+        console.log(`Axios error to PUT /appointments/${id}`, error);
+      });
   };
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));

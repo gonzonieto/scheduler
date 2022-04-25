@@ -38,21 +38,21 @@ export default function Application() {
   }, []);
 
   const bookInterview = (id, interview) => {
-    const currentAppointment = state.appointments[id];
-
-    const newAppointment = {
-      ...currentAppointment,
+    console.log('LOGGING "state":', state);
+    const appointment = {
+      ...state.appointments[id],
       interview: { ...interview },
     };
-    console.log('LOGGING "newAppointment":', newAppointment);
-
-    console.log('appointments BEFORE: ', state.appointments);
 
     const appointments = {
       ...state.appointments,
-      [id]: newAppointment,
+      [id]: appointment,
     };
-    console.log('appointments AFTER: ', appointments);
+
+    setState({
+      ...state,
+      appointments,
+    });
   };
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));

@@ -30,16 +30,35 @@ export default function Application() {
         setState((prev) => ({
           ...prev,
           days: all[0].data,
-          appointments: Object.values(all[1].data),
-          interviewers: Object.values(all[2].data),
+          appointments: all[1].data,
+          interviewers: all[2].data,
         }));
       })
       .catch((error) => console.log('LOGGING "error":', error));
   }, []);
 
-  const bookInterview = (id, interview) => {
-    console.log('LOGGING bookInterview: ', id, interview);
-  };
+  console.log('STATE: ', state);
+  // const bookInterview = (id, interview) => {
+  //   const currentAppointment = state.appointments.find(
+  //     (appointment) => appointment.id === id
+  //   );
+
+  //   console.log(`ID ${id}, INTERVIEW:`, interview);
+  //   console.log('');
+  //   console.log('currentAppointment:', currentAppointment);
+
+  //   const newAppointment = {
+  //     ...currentAppointment,
+  //     interview: { ...interview },
+  //   };
+
+  //   const appointments = {
+  //     ...state.appointments,
+  //     [id - 1]: newAppointment,
+  //   };
+
+  //   console.log('"new appointments object', appointments);
+  // };
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
@@ -55,7 +74,7 @@ export default function Application() {
         interviewers={interviewers}
         {...appointment}
         interview={interview}
-        bookInterview={bookInterview}
+        // bookInterview={bookInterview}
       />
     );
   });

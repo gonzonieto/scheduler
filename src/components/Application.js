@@ -52,9 +52,6 @@ export default function Application() {
       .put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then(() => {
         setState({ ...state, appointments });
-      })
-      .catch((error) => {
-        console.log(`Axios error to PUT /appointments/${id}`, error);
       });
   };
 
@@ -74,9 +71,6 @@ export default function Application() {
       .delete(`http://localhost:8001/api/appointments/${id}`)
       .then(() => {
         setState({ ...state, appointments });
-      })
-      .catch((error) => {
-        console.log(`Axios error to PUT /appointments/${id}`, error);
       });
   };
 

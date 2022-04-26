@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getAppointmentsForDay } from 'helpers/selectors';
 
 export default function useApplicationData() {
   const [state, setState] = useState({
@@ -26,6 +27,35 @@ export default function useApplicationData() {
       .catch((error) => console.log('LOGGING "error":', error));
   }, []);
 
+  const updateSpots = (appointmentID) => {
+    setState((prev) => {
+      // Get the index of the day being updated
+      const dayIndex = prev.days.findIndex((day) =>
+        day.appointments.includes(appointmentID)
+      );
+
+      // Count number of spots where `interview` property is null
+      const spots = getAppointmentsForDay(
+        prev,
+        prev.days[dayIndex].name
+      ).reduce((a, appointment) => a + (appointment.interview === null), 0);
+
+      // Create new day object with updates spots count
+      const newDay = { ...prev.days[dayIndex], spots };
+
+      // Copy existing array of days in state
+      const days = [...prev.days];
+
+      // Update the day
+      days[dayIndex] = newDay;
+
+      // Create new state object with updated days array
+      const newState = { ...prev, days };
+
+      return newState;
+    });
+  };
+
   const bookInterview = (id, interview) => {
     // This function creates new appointment object with the details of the interview that was booked, makes an axios PUT request to update the appointment in the database, updates state, and returns a Promise for the axios PUT request so the Appointment component that called this function can transition view modes once the database has been updated.
     const appointment = {
@@ -42,6 +72,7 @@ export default function useApplicationData() {
       .put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then(() => {
         setState({ ...state, appointments });
+        // updateSpots(id);
       });
   };
 
@@ -61,6 +92,7 @@ export default function useApplicationData() {
       .delete(`http://localhost:8001/api/appointments/${id}`)
       .then(() => {
         setState({ ...state, appointments });
+        updateSpots(id);
       });
   };
 

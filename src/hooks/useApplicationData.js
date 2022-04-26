@@ -27,35 +27,34 @@ export default function useApplicationData() {
       .catch((error) => console.log('LOGGING "error":', error));
   }, []);
 
+  const countSpots = (state, dayIndex) => {
+    const appointments = getAppointmentsForDay(
+      state,
+      state.days[dayIndex].name
+    );
+    return appointments.reduce((a, appt) => a + (appt.interview === null), 0);
+  };
+
+  const getDayIndexByAppointmentId = (id) => {
+    return state.days.findIndex((day) => day.appointments.includes(id));
+  };
+
+  // TODO - update with useReducer
   const updateSpots = (appointmentID) => {
+    // Get the index of the day being updated
+    const dayIndex = getDayIndexByAppointmentId(appointmentID);
+
     setState((prev) => {
-      // Get the index of the day being updated
-      const dayIndex = prev.days.findIndex((day) =>
-        day.appointments.includes(appointmentID)
-      );
-
-      // Count number of spots where `interview` property is null
-      const spots = getAppointmentsForDay(
-        prev,
-        prev.days[dayIndex].name
-      ).reduce((a, appointment) => a + (appointment.interview === null), 0);
-
-      // Create new day object with updates spots count
-      const newDay = { ...prev.days[dayIndex], spots };
-
-      // Copy existing array of days in state
+      // Copy existing array of days in state and update spots count
       const days = [...prev.days];
+      days[dayIndex].spots = countSpots(prev, dayIndex);
 
-      // Update the day
-      days[dayIndex] = newDay;
-
-      // Create new state object with updated days array
-      const newState = { ...prev, days };
-
-      return newState;
+      // Return updated state object
+      return { ...prev, days };
     });
   };
 
+  // TODO - update with useReducer
   const bookInterview = (id, interview) => {
     // This function creates new appointment object with the details of the interview that was booked, makes an axios PUT request to update the appointment in the database, updates state, and returns a Promise for the axios PUT request so the Appointment component that called this function can transition view modes once the database has been updated.
     const appointment = {
@@ -72,10 +71,11 @@ export default function useApplicationData() {
       .put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then(() => {
         setState({ ...state, appointments });
-        // updateSpots(id);
+        updateSpots(id);
       });
   };
 
+  // TODO - update with useReducer
   const cancelInterview = (id) => {
     // This function deletes an interview from the database by using the id to find the right appointment slot, and setting its 'interview' property to null
     const appointment = {
@@ -96,6 +96,7 @@ export default function useApplicationData() {
       });
   };
 
+  // TODO - update with useReducer
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
   return { state, setDay, bookInterview, cancelInterview };

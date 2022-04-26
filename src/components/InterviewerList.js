@@ -1,10 +1,11 @@
-import React from "react";
-import InterviewerListItem from "components/InterviewerListItem";
+import React from 'react';
+import PropTypes from 'prop-types';
+import InterviewerListItem from 'components/InterviewerListItem';
 
-import "components/InterviewerList.scss"
+import 'components/InterviewerList.scss';
 
-export default function InterviewerList(props){
-  const {interviewers, value, onChange } = props;
+export default function InterviewerList(props) {
+  const { interviewers, value, onChange } = props;
 
   const interviewerList = interviewers.map((interviewer) => (
     <InterviewerListItem
@@ -16,10 +17,10 @@ export default function InterviewerList(props){
     />
   ));
 
-  return(
+  return (
     <section className="interviewers">
       <h4 className="interviewers__header text--light">Interviewer</h4>
       <ul className="interviewers__list">{interviewerList}</ul>
     </section>
   );
-};
+}

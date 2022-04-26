@@ -27,32 +27,28 @@ export default function useApplicationData() {
       .catch((error) => console.log('LOGGING "error":', error));
   }, []);
 
+  const countSpots = (state, dayIndex) => {
+    const appointments = getAppointmentsForDay(
+      state,
+      state.days[dayIndex].name
+    );
+    return appointments.reduce((a, appt) => a + (appt.interview === null), 0);
+  };
+
+  const getDayIndexByAppointmentId = (id) =>
+    state.days.findIndex((day) => day.appointments.includes(id));
+
   const updateSpots = (appointmentID) => {
+    // Get the index of the day being updated
+    const dayIndex = getDayIndexByAppointmentId(appointmentID);
+
     setState((prev) => {
-      // Get the index of the day being updated
-      const dayIndex = prev.days.findIndex((day) =>
-        day.appointments.includes(appointmentID)
-      );
-
-      // Count number of spots where `interview` property is null
-      const spots = getAppointmentsForDay(
-        prev,
-        prev.days[dayIndex].name
-      ).reduce((a, appointment) => a + (appointment.interview === null), 0);
-
-      // Create new day object with updates spots count
-      const newDay = { ...prev.days[dayIndex], spots };
-
-      // Copy existing array of days in state
+      // Copy existing array of days in state and update spots count
       const days = [...prev.days];
+      days[dayIndex].spots = countSpots(prev, dayIndex);
 
-      // Update the day
-      days[dayIndex] = newDay;
-
-      // Create new state object with updated days array
-      const newState = { ...prev, days };
-
-      return newState;
+      // Return updated state object
+      return { ...prev, days };
     });
   };
 
@@ -72,7 +68,7 @@ export default function useApplicationData() {
       .put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then(() => {
         setState({ ...state, appointments });
-        // updateSpots(id);
+        updateSpots(id);
       });
   };
 

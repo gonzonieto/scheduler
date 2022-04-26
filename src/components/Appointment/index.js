@@ -5,6 +5,7 @@ import Show from 'components/Appointment/Show';
 import Form from 'components/Appointment/Form';
 import Status from 'components/Appointment/Status';
 import Error from 'components/Appointment/Error';
+import Confirm from 'components/Appointment/Confirm';
 import useVisualMode from 'hooks/useVisualMode';
 import 'components/Appointment/styles.scss';
 
@@ -20,6 +21,7 @@ export default function Appointment({
   const SHOW = 'SHOW';
   const CREATE = 'CREATE';
   const EDIT = 'EDIT';
+  const CONFIRM_DELETE = 'CONFIRM_DELETE';
   const SAVING = 'SAVING';
   const DELETING = 'DELETING';
   const ERROR_SAVE = 'ERROR_SAVE';
@@ -36,8 +38,12 @@ export default function Appointment({
       .catch(() => transition(ERROR_SAVE, true));
   };
 
+  const confirmDestroy = () => {
+    transition(CONFIRM_DELETE);
+  };
+
   const destroy = () => {
-    transition(DELETING);
+    transition(DELETING, true);
     cancelInterview(id)
       .then(() => transition(EMPTY))
       .catch(() => transition(ERROR_DELETE, true));
@@ -54,7 +60,7 @@ export default function Appointment({
       <Header time={time}></Header>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
-        <Show {...interview} onEdit={edit} onDelete={destroy} />
+        <Show {...interview} onEdit={edit} onDelete={confirmDestroy} />
       )}
       {mode === CREATE && (
         <Form interviewers={interviewers} onSave={save} onCancel={back} />
@@ -80,6 +86,13 @@ export default function Appointment({
         <Error
           message="Unable to update appointment details."
           onClose={() => transition(interview ? SHOW : EMPTY)}
+        />
+      )}
+      {mode === CONFIRM_DELETE && (
+        <Confirm
+          message="Are you sure you want to delete this appointment?"
+          onConfirm={destroy}
+          onCancel={back}
         />
       )}
     </article>

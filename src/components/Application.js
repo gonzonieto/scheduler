@@ -60,6 +60,10 @@ export default function Application() {
       });
   };
 
+  const cancelInterview = (id) => {
+    // This function deletes an interview from the database by using the id to find the right appointment slot, and setting its 'interview' property to null
+  };
+
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
   const appointments = getAppointmentsForDay(state, state.day);

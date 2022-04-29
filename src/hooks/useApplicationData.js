@@ -12,9 +12,9 @@ export default function useApplicationData() {
 
   useEffect(() => {
     Promise.all([
-      axios.get('http://localhost:8001/api/days'),
-      axios.get('http://localhost:8001/api/appointments'),
-      axios.get('http://localhost:8001/api/interviewers'),
+      axios.get('https://scheduler-api-test.herokuapp.com/api/days'),
+      axios.get('https://scheduler-api-test.herokuapp.com/api/appointments'),
+      axios.get('https://scheduler-api-test.herokuapp.com/api/interviewers'),
     ])
       .then((all) => {
         setState((prev) => ({
@@ -68,7 +68,10 @@ export default function useApplicationData() {
     };
 
     return axios
-      .put(`http://localhost:8001/api/appointments/${id}`, appointment)
+      .put(
+        `https://scheduler-api-test.herokuapp.com/api/appointments/${id}`,
+        appointment
+      )
       .then(() => {
         setState({ ...state, appointments });
         updateSpots(id);
@@ -89,7 +92,7 @@ export default function useApplicationData() {
     };
 
     return axios
-      .delete(`http://localhost:8001/api/appointments/${id}`)
+      .delete(`https://scheduler-api-test.herokuapp.com/api/appointments/${id}`)
       .then(() => {
         setState({ ...state, appointments });
         updateSpots(id);

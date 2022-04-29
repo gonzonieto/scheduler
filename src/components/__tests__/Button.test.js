@@ -15,7 +15,7 @@ it('renders its `children` prop as text', () => {
 
 it('renders a default button style', () => {
   const { getByText } = render(<Button>Default</Button>);
-  expect(getByText('Default')).toHaveClass('button2');
+  expect(getByText('Default')).toHaveClass('button');
 });
 
 it('renders a confirm button', () => {

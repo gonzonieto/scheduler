@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from 'components/Button';
 import DayList from 'components/DayList';
 import Appointment from 'components/Appointment';
 import {

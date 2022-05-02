@@ -1,6 +1,7 @@
 export function getAppointmentsForDay(state, today) {
   const selectedDay = state.days.find((day) => day.name === today);
 
+  // Return an empty array if there are no days or if the selected day is not found
   if (!state.days || !selectedDay) return [];
 
   const todaysAppointmentIDs = selectedDay.appointments;
@@ -16,6 +17,7 @@ export function getInterviewersForDay(state, today) {
   const interviewers = state.interviewers;
   const selectedDay = state.days.find((day) => day.name === today);
 
+  // Return an empty array if there are no interviewers or if the selected day is not found
   if (!Object.keys(interviewers).length || !selectedDay) return [];
 
   const todaysInterviewerIDs = selectedDay.interviewers;

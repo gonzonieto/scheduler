@@ -17,6 +17,7 @@ export default function Appointment({
   bookInterview,
   cancelInterview,
 }) {
+  // Constants for an appointment slots' various view modes
   const EMPTY = 'EMPTY';
   const SHOW = 'SHOW';
   const CREATE = 'CREATE';
@@ -27,6 +28,7 @@ export default function Appointment({
   const ERROR_SAVE = 'ERROR_SAVE';
   const ERROR_DELETE = 'ERROR_DELETE';
 
+  // Commit an interview to the database
   const save = (name, interviewer) => {
     const interview = {
       student: name,
@@ -38,10 +40,12 @@ export default function Appointment({
       .catch(() => transition(ERROR_SAVE, true));
   };
 
+  // Confirm an interview is to be deleted
   const confirmDestroy = () => {
     transition(CONFIRM_DELETE);
   };
 
+  // Delete an interview
   const destroy = () => {
     transition(DELETING, true);
     cancelInterview(id)
@@ -49,15 +53,18 @@ export default function Appointment({
       .catch(() => transition(ERROR_DELETE, true));
   };
 
+  // Edit an existing interview
   const edit = () => {
     transition(EDIT);
   };
 
+  // If there is an interview booked on this slot, show it; otherwise, show an empty slot
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
   return (
     <article className="appointment">
       <Header time={time}></Header>
+      {/* 'mode' is being used with inline conditionals to set the correct view mode for the appointment slot */}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
         <Show {...interview} onEdit={edit} onDelete={confirmDestroy} />

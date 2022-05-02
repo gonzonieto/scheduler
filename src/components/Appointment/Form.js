@@ -9,16 +9,19 @@ export default function Form(props) {
   const [error, setError] = useState();
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
+  // Reset the form
   const reset = () => {
     setStudent('');
     setInterviewer(null);
   };
 
+  // Cancel the appointment being edited without submitting
   const cancel = () => {
     reset();
     onCancel();
   };
 
+  // Ensure student name field is not blank and an interviewer has been selected
   const validate = () => {
     if (student === '') {
       setError('Student name cannot be blank');
